@@ -146,18 +146,18 @@ void draw() {
     drawSegment(bx, by, a1, seg1[i], segW[i], c1);
     drawJoint(bx, by, 14);
 
-    // Hitung titik ujung segmen 1
-    float x1 = bx + sin(radians(a1)) * (-seg1[i]);  // karena segmen digambar ke arah -length di sumbu Y lokal
-    float y1 = by - cos(radians(a1)) * (-seg1[i]);
+    // Posisi ujung segmen 1 (dx=L*sin(a), dy=-L*cos(a))
+    float x1 = bx + sin(radians(a1)) * seg1[i];
+    float y1 = by - cos(radians(a1)) * seg1[i];
 
     // PIP
     float a2 = a1 + currPIP[i];
     drawSegment(x1, y1, a2, seg2[i], segW[i]*0.92, c2);
     drawJoint(x1, y1, 12);
 
-    // Hitung titik ujung segmen 2
-    float x2 = x1 + sin(radians(a2)) * (-seg2[i]);
-    float y2 = y1 - cos(radians(a2)) * (-seg2[i]);
+    // Posisi ujung segmen 2
+    float x2 = x1 + sin(radians(a2)) * seg2[i];
+    float y2 = y1 - cos(radians(a2)) * seg2[i];
 
     // DIP (ibu jari seg3=0, otomatis tidak tergambar)
     if (seg3[i] > 0) {
@@ -166,7 +166,11 @@ void draw() {
       drawJoint(x2, y2, 10);
     }
 
-    // Indikator status (buka/tutup) dan sudut dasar
+    noStroke();
+    fill(fingers[i] ? color(60, 190, 90) : color(200, 70, 70));
+    ellipse(bx, by - 14, 6, 6);
+
+    // Indikator teks status (buka/tutup)
     fill(40, 44, 52);
     textAlign(CENTER, TOP);
     textSize(10);
